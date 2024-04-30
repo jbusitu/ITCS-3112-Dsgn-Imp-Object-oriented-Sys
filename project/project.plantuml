@@ -1,0 +1,63 @@
+@startuml "project"
+
+class Student {
+    -studentId: Integer
+    -name: String
+    -contactInfo: String
+    -enrollmentDetails: String
+    -academicRecord: AcademicRecord
+    +setAcademicRecord(AcademicRecord academicRecord): void
+    +toString(): String
+}
+
+class Course {
+    -courseCode: String
+    -title: String
+    -description: String
+    -instructorDetails: String
+    +toString(): String
+}
+
+class AcademicRecord {
+    -grades: Map<String, Double>
+    +addCourseGrade(String courseCode, double grade): void
+    +calculateGPA(): doube
+}
+
+class Enrollment {
+    -student: Student
+    -enrolledCourses: List<Course> 
+    +enrollInCourse(Course course): void
+    +isEnrolledInCourse(Course course): boolean
+    +getEnrolledCourses(): List<Course>
+}
+
+class UserInterface {
+    -scanner: Scanner
+    -students: List<Student>
+    -courses: List<Course>
+    -studentEnrollments: Map<Student, Enrollment>
+    + addStudent(): void
+    + displayStudents(): void
+    + addCourse(): void
+    + displayCourses(): void 
+    + addCourseGrade(int studentId, String courseCode, double grade): void
+    + enrollStudentInCourse(): void
+    + calculateGPA(int studentId): double
+    - findStudentById(int studentId): Student
+    - findCourseByCode(String courseCode): Course
+}
+
+class Main {
+    +main(args: String[]): void
+}
+
+Student --> AcademicRecord
+UserInterface --> Student
+UserInterface --> Course
+UserInterface --> Enrollment
+Enrollment --> Student
+Enrollment --> Course
+Main --> UserInterface
+
+@enduml
